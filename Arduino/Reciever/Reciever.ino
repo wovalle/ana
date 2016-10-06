@@ -66,7 +66,7 @@ void loop() {
       dataToWrite = decypherAction(data);
       
       radio.stopListening();                                        // First, stop listening so we can talk   
-      radio.write( &data, sizeof(int) );              // Send the final one back.      
+      radio.write( &dataToWrite, sizeof(int) );              // Send the final one back.      
       radio.startListening();                                       // Now, resume listening so we catch the next packets.     
    }
 }

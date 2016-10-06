@@ -50,18 +50,18 @@ void loop() {
 
     if (!sendingData) {} 
     else if (timeout && sendingData) { // Describe the results
-        Serial.println(F("Failed, response timed out."));
+        Serial.println(F("E: Response timed out."));
         sendingData = false;
     } 
     else {
-        unsigned long got_time; // Grab the response, compare, and send to debugging spew
-        radio.read( & got_time, sizeof(unsigned long));
+        unsigned long data_received; // Grab the response, compare, and send to debugging spew
+        radio.read( & data_received, sizeof(unsigned long));
         unsigned long end_time = millis();
 
         // Spew it
-        Serial.print(F("Sent Data"));
+        Serial.print(F("L: Sent Data"));
         Serial.print(F(", Got response "));
-        Serial.print(got_time);
+        Serial.print(data_received);
         Serial.print(F(", Round-trip delay "));
         Serial.print(end_time - start_time);
         Serial.println(F(" milliseconds"));
@@ -81,7 +81,7 @@ void sendData(unsigned long data) {
 void checkSerial() {
     if (Serial.available()) {
         int d = Serial.parseInt();
-        Serial.print(F("Serial.Read: "));
+        Serial.print(F("L: Serial.Read: "));
         Serial.println(d);
         sendData(d);
     }
