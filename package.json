@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/wovalle/ana/issues"
   },
-  "homepage": "https://github.com/wovalle/ana#readme"
+  "homepage": "https://github.com/wovalle/ana#readme",
+  "dependencies": {
+    "serialport": "^4.0.1"
+  }
 }
