@@ -18,7 +18,7 @@ byte addresses[][6] = { "1Node", "2Node" };
 
 void setup() {
     Serial.begin(115200);
-    Serial.println(F("Init"));
+    Serial.println(F("C: Init"));
     radio.begin();
 
     // Set the PA Level low to prevent power supply related issues since this is a
@@ -73,7 +73,7 @@ void sendData(unsigned long data) {
     radio.stopListening(); // First, stop listening so we can talk.
     sendingData = true;
     if (!radio.write( & data, sizeof(int))) { // Take the time, and send it.  This will block until complete
-        Serial.println(F("failed"));
+        Serial.println(F("E: Failed to write"));
     }
     radio.startListening(); // Now, continue listening
 }
