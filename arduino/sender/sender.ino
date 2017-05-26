@@ -86,4 +86,3 @@ void checkSerial() {
         sendData(d);
     }
 }
-

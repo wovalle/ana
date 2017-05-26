@@ -11,7 +11,7 @@
 bool radioNumber = 1;
 
 /* Hardware configuration: Set up nRF24L01 radio on SPI bus plus pins 7 & 8 */
-RF24 radio(9,10);
+RF24 radio(40,53);
 /**********************************************************/
 
 byte addresses[][6] = {"1Node","2Node"};
@@ -78,29 +78,24 @@ int decypherAction (int dataInt){   //Write data
   int portCode = data.substring(0,3).toInt();
   int arduinoPort = portCode - 100;
     
-  bool valueToWrite = data.substring(3,4) == "1";
+  bool valueToWrite = data.substring(3,4) == "1"; //force :)
   bool shouldRead = data.length() == 3;
-  
-  printStatus(portCode, arduinoPort, valueToWrite, shouldRead);
+  bool readValue = digitalRead(arduinoPort);
 
-  if(shouldRead) {
-    bool value = digitalRead(arduinoPort);
-    Serial.print(F(" Digital Read: "));
-    Serial.print(value);
-    return value;
+  printStatus(portCode, arduinoPort, valueToWrite, shouldRead, readValue);
+
+  if(shouldRead)
+    return readValue;
+  else {
+    digitalWrite(arduinoPort, valueToWrite);
+    return dataInt;
   }
-  
-  Serial.print(F(" Write: "));
-  Serial.print(valueToWrite);
-  Serial.print(F(" , into port: "));
-  Serial.print(arduinoPort);
-  
-  digitalWrite(arduinoPort, valueToWrite);
-
-  return dataInt;
 }
 
-void printStatus(int portCode, int arduinoPort, bool valueToWrite, bool shouldRead){
+void printStatus(int portCode, int arduinoPort, bool valueToWrite, bool shouldRead, bool readValue){
+  Serial.println("");
+  Serial.print("---------------------");
+  Serial.println("");
   Serial.print(F(" Should Read: "));
   Serial.print(shouldRead);
   Serial.println("");
@@ -116,6 +111,23 @@ void printStatus(int portCode, int arduinoPort, bool valueToWrite, bool shouldRe
   Serial.print(F(" Port Code: "));
   Serial.print(portCode);
   Serial.println("");
-  Serial.println("---------------------\n");
-}
+  Serial.print("---------------------");
 
+  if(shouldRead) {
+    Serial.println("");
+    Serial.print(F(" Digital Read: "));
+    Serial.print(readValue);
+    Serial.println("");
+    Serial.print("---------------------");
+  }
+  else {
+    Serial.println("");
+    Serial.print(F(" Write: "));
+    Serial.print(valueToWrite);
+    Serial.print(F(", to port: "));
+    Serial.print(arduinoPort);
+    Serial.println("");
+    Serial.print("---------------------");
+  }
+
+}
