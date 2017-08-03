@@ -15,3 +15,14 @@ openhab:
   # The command node is very important. It overrides
   # the "gosu openhab ./start.sh" command from Dockerfile and runs as root!
   command: "./start.sh"
+
+mosquitto:
+  container_name: mosquitto
+  image: "fstehle/rpi-mosquitto"
+  restart: always
+  ports:
+    - "1883:1883"
+    - "9001:9001"
+  volumes:
+    - "/srv/mosquitto/config:/mqtt/config:ro"
+    - "/srv/mosquitto/data:/mqtt/data/"
