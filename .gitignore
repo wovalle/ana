@@ -1,3 +1,9 @@
 node_modules
 
 build
+
+ha/config/tts
+home-assistant_v2.db
+home-assistant_v2.log
+ha/config/secrets.yaml
+ha/config/switches.yaml
